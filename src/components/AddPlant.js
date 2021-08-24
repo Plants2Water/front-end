@@ -52,7 +52,7 @@ const AddPlant = (props) => {
                         id = 'species'
                         type = 'text'
                         placeholder = 'Plant Species'
-                        onChange = {handleSubmit}
+                        onChange = {handleChange}
                     />
                 </label>
 
@@ -64,7 +64,7 @@ const AddPlant = (props) => {
                     id = 'h20Frequency'
                     type = 'text'
                     placeholder = 'How often to water'
-                    onChange = {handleSubmit}
+                    onChange = {handleChange}
                 />
             </label>
 
@@ -75,9 +75,10 @@ const AddPlant = (props) => {
                     id = 'plantImage'
                     type = 'text'
                     placeholder = 'Optional: URL to plant image'
-                    onChange = {handleSubmit}
+                    onChange = {handleChange}
                 />
             </Label>
+            <button onSubmit={handleSubmit}>Add Plant</button>
                 </h2>
             </form>
         </div>
