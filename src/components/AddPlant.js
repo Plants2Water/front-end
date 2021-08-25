@@ -1,18 +1,8 @@
 import React, {useState} from 'react'
-import {useHistory } from 'react-router-dom'
 import { Label } from 'reactstrap'
-
-const initialPlant = {
-    id: '',
-    nickname:'',
-    h20_frequency:'',
-    image: ''
-}
 
 const AddPlant = (props) => {
     const [plant, setPlant] = useState(initialPlant)
-    const history = useHistory()
-    
 
     const handleChange = event => {
         setPlant({
@@ -24,7 +14,8 @@ const AddPlant = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault()
         props.AddPlant(plant)
-            }
+        props.history.push('/dashboard')
+    }
 
     return (
         <div className = 'addPlantForm' id = 'addPlantForm'>
