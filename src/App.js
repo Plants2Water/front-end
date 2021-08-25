@@ -36,30 +36,30 @@ const initialCreds = {
 }
 
 function App() {
-  const [plants, setPlants] = useState(initialPlantValues)
-  const [users, setUsers] = useState(initialUserValues)
-  const [credentials, setCredentials] = useState(initialCreds)
+  // const [plants, setPlants] = useState(initialPlantValues)
+  // const [users, setUsers] = useState(initialUserValues)
+  // const [credentials, setCredentials] = useState(initialCreds)
 
-  useEffect(() => {
-    axios.get('https://bw-water-my-plants-01.herokuapp.com/api/users')
-    .then(res => {
-      console.log(res.data)
-      setUsers(res.data)
-    })
-    .catch(err => console.log(err))
-  },[])
+  // useEffect(() => {
+  //   axios.get('https://bw-water-my-plants-01.herokuapp.com/api/users')
+  //   .then(res => {
+  //     console.log(res.data)
+  //     setUsers(res.data)
+  //   })
+  //   .catch(err => console.log(err))
+  // },[])
 
-  const login = (e) => {
-    e.preventDefault()
-    if (credentials.username==='Lambda' && credentials.password==='School') {
-    axios.post('https://bw-water-my-plants-01.herokuapp.com/api/auth/login',credentials)
-    .then(res => {
-      localStorage.setItem('token', res.data.payload)
-      console.log(res.message)
-    })
-    .catch(err => console.log(err))
-    } 
-  }
+  // const login = (e) => {
+  //   e.preventDefault()
+  //   if (credentials.username==='Lambda' && credentials.password==='School') {
+  //   axios.post('https://bw-water-my-plants-01.herokuapp.com/api/auth/login',credentials)
+  //   .then(res => {
+  //     localStorage.setItem('token', res.data.payload)
+  //     console.log(res.message)
+  //   })
+  //   .catch(err => console.log(err))
+  //   } 
+  // }
 
   return (
     <Router>
@@ -71,7 +71,8 @@ function App() {
 
         <Switch>
           <PrivateRoute path='/dashboard' component={Dashboard} />
-          
+           {/* <Route exact path='/' component={Landing}/> */}
+           <Route exact path='/register' component={Register}/>
         </Switch>
     </div>
     </Router>
