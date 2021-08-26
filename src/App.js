@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import axios from 'axios';
 import PrivateRoute from './components/PrivateRoute'
 import Dashboard from './components/Dashboard';
+import Nav from './components/nav'
 import './App.css';
 
 const initialPlantValues = [{
@@ -64,17 +65,20 @@ function App() {
   return (
     <Router>
     <div className="App">
+        <Nav />
         <h1>Plants!</h1>
         <Link to='/login'>Log In</Link>
         {localStorage.getItem('token') && <div>
           <Link to='/dashboard'>Dashboard</Link></div>}
-
+        
         <Switch>
           <PrivateRoute path='/dashboard' component={Dashboard} />
            {/* <Route exact path='/' component={Landing}/> */}
            <Route exact path='/register' component={Register}/>
         </Switch>
+        
     </div>
+    
     </Router>
   );
 }
