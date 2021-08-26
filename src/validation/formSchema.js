@@ -24,7 +24,8 @@ const formSchema = yup.object().shape({
     .email('Must be a valid email address')
     .required('Email is required'),
   telephone: yup
-    .string(),
+    .string()
+    .trim(),
   password:  yup
     .string()
     .trim()
