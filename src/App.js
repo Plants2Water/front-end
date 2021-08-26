@@ -6,19 +6,6 @@ import Dashboard from './components/Dashboard';
 import './App.css';
 import Register from './components/Register';
 
-const initialPlantValues = [{
-  "plant_id": 0,
-  "species": "",
-  "nickname": "",
-  "h2oFrequency": 0,
-  "last_watered": "",
-  "photo_url": "",
-  "notes": "",
-  "user_id": 0,
-  "created_at": "",
-  "updated_at": ""
-}]
-
 const initialUserValues = [{
   "user_id": 2, 
   "username": "brownthumb", 

@@ -73,7 +73,7 @@ export const createPlant = (plant) => {
     }
 };
 
-//action(s) for creating plants below
+//action(s) for updating plants below
 export const updatePlant = (plant) => (dispatch) => {
     dispatch(fetchStartP)
     axiosWithAuth()
@@ -85,10 +85,9 @@ export const updatePlant = (plant) => (dispatch) => {
 			})
         })
         .catch((error) => {
-			console.log(error);
 			dispatch(fetchFailP(error))
         })
-    }
+}
 
 //action(s) for deleting plants below
 export const deletePlant = (plant) => (dispatch) => {

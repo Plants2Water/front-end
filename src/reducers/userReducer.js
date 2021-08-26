@@ -9,6 +9,10 @@ const initialState = {
         telephone:'',
         email:''
     },
+    credentials:{
+        username:'',
+        password:''
+    },
     fetching:false,
     error:''
 }

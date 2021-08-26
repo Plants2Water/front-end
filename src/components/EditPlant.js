@@ -2,16 +2,9 @@ import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
 import {link, useHistory, useParams} from 'react-router-dom'
 import { getUser } from './../actions/userActions'
-import { updatePlant } from './../actions/plantActions'
-import Nav from './components/nav';
+import { updatePlant, deletePlant } from './../actions/plantActions'
+import Nav from './Nav'
 
-const initialPlant = {
-	id: "",
-	nickname: "",
-	species: "",
-	h2o_frequency: "",
-	image: "",
-}
 const EditPlant = (props) => {
 	const { plant, fetching, error } = props
 	const history = useHistory();
@@ -65,4 +58,4 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect (mapStateToProps,{updatePlant, getUser})(EditPlant)
+export default connect (mapStateToProps,{updatePlant, getUser, deletePlant})(EditPlant)

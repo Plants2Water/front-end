@@ -1,20 +1,33 @@
 import React, {useState} from 'react'
+import { connect } from 'react-redux'
 import { Label } from 'reactstrap'
-import Nav from './components/nav';
+import Nav from './Nav'
+import { createPlant } from '../actions/plantActions'
+
+const initialPlantValues = [{
+    "plant_id": 0,
+    "species": "",
+    "nickname": "",
+    "h2oFrequency": 0,
+    "last_watered": "",
+    "photo_url": "",
+    "notes": "",
+    "user_id": 0,
+    "created_at": "",
+    "updated_at": ""
+  }]
 
 const AddPlant = (props) => {
-    const [plant, setPlant] = useState(initialPlant)
+    const [plant, setPlant] = useState(initialPlantValues)
 
     const handleChange = event => {
-        setPlant({
-            ...plant,
-            [event.target.name]: event.target.value
-        })
+        setPlant(...plant,
+            [event.target.name] = event.target.value)
     }
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        props.AddPlant(plant)
+        props.createPlant(plant)
         props.history.push('/dashboard')
     }
 
@@ -79,4 +92,4 @@ const AddPlant = (props) => {
     )
 }
 
-export default AddPlant
+export default connect(null,{createPlant})(AddPlant)

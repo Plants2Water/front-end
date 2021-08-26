@@ -4,7 +4,7 @@ import { getPlants } from '../actions/plantActions'
 import { Link, Switch, Route } from 'react-router-dom'
 import Plant from './Plant'
 import AddPlant from './AddPlant'
-import Nav from './components/nav';
+import Nav from './Nav'
 
 const Dashboard = (props) => {  
     const { plants, fetching, error } = props

@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory} from "react-router-dom";
-export default function LoginForm (props) {
+import { connect } from 'react-redux';
+import { login } from '../actions/userActions';
+
+const LoginForm = (props) => {
   const {
     values,
     submit,
@@ -58,3 +61,9 @@ export default function LoginForm (props) {
     </div>
   )
 }
+
+const mapStateToProps = (state) => {
+  credentials: state.credentials
+}
+
+export default connect(mapStateToProps,{login})(LoginForm)

@@ -31,6 +31,7 @@ export const signup = (signupCredentials, history) => (dispatch) => {
 	});
 }
 
+//not used right now
 export const login = (loginCredentials) => (dispatch) => {
 	dispatch({
 		type: START_FETCHING,
@@ -38,11 +39,7 @@ export const login = (loginCredentials) => (dispatch) => {
 	axiosWithAuth().post('/api/auth/login', loginCredentials)
 	.then((response) => {
 		console.log(response);
-		localStorage.setItem('token', response.data.token);
-
-		
-
-		
+		localStorage.setItem('token', response.data.token);		
 		localStorage.setItem('userId', userId);
 		dispatch({
 			type: LOGIN

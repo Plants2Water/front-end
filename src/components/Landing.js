@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import LandingForm from './LandingForm';
+import LoginForm from './LoginForm';
 import axios from 'axios';
 import * as yup from 'yup';
-import formSchema as schema from '../validation/formSchema'
+import schema from "../validation/formSchema";
+
 const initialFormValues = {
   username: '',
   password: '',
@@ -13,6 +14,7 @@ export default function Landing() {
   const [formValues, setFormValues] = useState(initialFormValues)
   const [formErrors, setFormErrors] = useState(initialFormValues)
   const [disabled, setDisabled] = useState(initialDisabled)
+
   const postLogin = newLogin => {
     axios.post('https://bw-water-my-plants-01.herokuapp.com/api/auth/login', newLogin)
         .then(res =>{
@@ -43,16 +45,20 @@ export default function Landing() {
     }
     postLogin(newLogin);
   }
+
   useEffect(() => {
     postLogin()
   }, [])
+
   useEffect(() => {
     schema.isValid(formValues).then(valid => setDisabled(!valid))
   }, [formValues])
+
   const Logout = () => {
     setLogin(initialFormValues);
     console.log("LogOut");
   }
+  
   return (
     <div className="Landing">
         <div>
