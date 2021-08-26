@@ -38,15 +38,66 @@ const EditPlant = (props) => {
 		history.push();
 	}
 
+	const handleDelete = (e) => {
+		e.preventDefault()
+		deletePlant(plant.id)
+		history.push()
+	}
+
     return (
         <div className = 'editPlantForm' id = 'editPlantFrom'>
 			<Nav />
             <h1>Edit Your Plant</h1>
-            <h3></h3>
-                <form>
+            <form>
+                <label >
+                    Plant Name:
+                    <input
+                        name = 'plantName'
+                        id = 'plantName'
+                        type = 'text'
+                        placeholder = 'Please name this plant'
+                        onChange = {handleChange}
+                    />
+                </label>
 
-                {/* Plant nickname */}
+            {/* PLANT SPECIES */}
+                <label>
+                    Species:
+                    <input
+                        name = 'species'
+                        id = 'species'
+                        type = 'text'
+                        placeholder = 'Plant Species'
+                        onChange = {handleChange}
+                    />
+                </label>
+
+            {/* H20 FREQUENCY */}
+            <label>
+                Water Frequency:
+                <input
+                    name = 'h20Frequency'
+                    id = 'h20Frequency'
+                    type = 'text'
+                    placeholder = 'How often to water'
+                    onChange = {handleChange}
+                />
+            </label>
+
+            {/* Optional Image */}
+            <Label>
+                <input 
+                    name = 'plantImage'
+                    id = 'plantImage'
+                    type = 'text'
+                    placeholder = 'Optional: URL to plant image'
+                    onChange = {handleChange}
+                />
+            </Label>
+            <button onSubmit={handleSubmit}>Submit Changes</button>
             </form>
+
+			<button onClick={handleDelete}>Delete plant</button>
         </div>
     )
 }
