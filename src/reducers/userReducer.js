@@ -13,7 +13,7 @@ const initialState = {
     error:''
 }
 
-export const userReducer = (state = initialState, action) => {
+const userReducer = (state = initialState, action) => {
     switch (action.type) {
         case(START_FETCHING):
             return({
@@ -47,3 +47,5 @@ export const userReducer = (state = initialState, action) => {
             return state
     }
 }
+
+export default userReducer
