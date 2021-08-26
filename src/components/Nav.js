@@ -26,7 +26,6 @@ const Wrapper = styled.div`
     
 `
 const Nav = () => {
-    
     return (
         <Wrapper>
             <div className="links">
@@ -39,4 +38,5 @@ const Nav = () => {
         </Wrapper>
     )
 }
+
 export default Nav
