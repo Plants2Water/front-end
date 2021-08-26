@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import axios from 'axios';
 import PrivateRoute from './components/PrivateRoute'
 import Dashboard from './components/Dashboard';
+import Register from './components/Register';
+import Landing from './components/Landing';
 import './App.css';
 
 const initialPlantValues = [{
@@ -71,7 +73,7 @@ function App() {
 
         <Switch>
           <PrivateRoute path='/dashboard' component={Dashboard} />
-           {/* <Route exact path='/' component={Landing}/> */}
+           <Route exact path='/' component={Landing}/>
            <Route exact path='/register' component={Register}/>
         </Switch>
     </div>

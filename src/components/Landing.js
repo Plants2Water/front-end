@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import LandingForm from './LandingForm';
 import axios from 'axios';
 import * as yup from 'yup';
-import formSchema as schema from '../validation/formSchema'
+// import formSchema as schema from '../validation/formSchema'
+import schema from '../validation/formSchema';
+
+
 const initialFormValues = {
   username: '',
   password: '',
@@ -58,7 +61,7 @@ export default function Landing() {
         <div>
           <h2>Welcome, <span>{login.username}</span></h2>
         </div>
-        <LoginForm
+        <LandingForm
           values={formValues}
           change={inputChange}
           submit={formSubmit}
