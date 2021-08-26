@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import { Label } from 'reactstrap'
+import Nav from './components/nav';
 
 const AddPlant = (props) => {
     const [plant, setPlant] = useState(initialPlant)
@@ -19,6 +20,7 @@ const AddPlant = (props) => {
 
     return (
         <div className = 'addPlantForm' id = 'addPlantForm'>
+            <Nav />
             <form>
                 <h1>About Your Plant</h1>
                 <h2>
