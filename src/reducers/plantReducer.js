@@ -11,7 +11,7 @@ const initialState = {
     error:''
 }
 
-export const plantReducer = (state = initialState, action) => {
+const plantReducer = (state = initialState, action) => {
     switch (action.type) {
         case(FETCH_START_PLANTS):
             return({
@@ -45,3 +45,5 @@ export const plantReducer = (state = initialState, action) => {
             return state
     }
 }
+
+export default plantReducer

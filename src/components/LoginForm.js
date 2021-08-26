@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory} from "react-router-dom";
-export default function LandingForm (props) {
+export default function LoginForm (props) {
   const {
     values,
     submit,

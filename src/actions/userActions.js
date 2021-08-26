@@ -13,35 +13,29 @@ export const signup = (signupCredentials, history) => (dispatch) => {
 	dispatch({
 		type: START_FETCHING,
 	});
-    // commented out for now, might use in near future? 
-	// axiosWithAuth().post(
-	// 	"",
-	// 	signupCredentials,
-	// )
-	.then((response) => {
-		console.log('response', response)
+    axiosWithAuth().post('/api/auth/register',signupCredentials)
+	.then(response => {
 		localStorage.setItem('token', response.data.token);
 		localStorage.setItem('userId', response.data.user.id);
 		dispatch({
-			type: SIGNUP,
+			type: gitSIGNUP,
 			payload: response.data.user
 		});
 		// history.push('/plants');
 	})
-	.catch((error) => {
+	.catch(error => {
 		dispatch({
 			type: FETCH_ERROR,
-			payload: error.response.data.message,
+			payload: error,
 		});
 	});
 }
 
 export const login = (loginCredentials) => (dispatch) => {
-	console.log('login credentials', loginCredentials)
 	dispatch({
 		type: START_FETCHING,
 	});
-	// axiosWithAuth().post('', loginCredentials)
+	axiosWithAuth().post('/api/auth/login', loginCredentials)
 	.then((response) => {
 		console.log(response);
 		localStorage.setItem('token', response.data.token);
