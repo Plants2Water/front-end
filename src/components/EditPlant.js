@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {link, useHistory, useParams} from 'react-router-dom'
 import { getUser } from './../actions/userActions'
 import { updatePlant } from './../actions/plantActions'
+import Nav from './components/nav';
 
 const initialPlant = {
 	id: "",
@@ -46,6 +47,7 @@ const EditPlant = (props) => {
 
     return (
         <div className = 'editPlantForm' id = 'editPlantFrom'>
+			<Nav />
             <h1>Edit Your Plant</h1>
             <h3></h3>
                 <form>

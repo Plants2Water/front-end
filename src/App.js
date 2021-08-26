@@ -65,7 +65,9 @@ function App() {
   return (
     <Router>
     <div className="App">
+        
         <h1>Plants!</h1>
+
         <Link to='/login'>Log In</Link>
         {localStorage.getItem('token') && <div>
           <Link to='/dashboard'>Dashboard</Link></div>}
