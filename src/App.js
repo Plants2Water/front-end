@@ -4,6 +4,7 @@ import axios from 'axios';
 import PrivateRoute from './components/PrivateRoute'
 import Dashboard from './components/Dashboard';
 import './App.css';
+import Register from './components/Register';
 
 const initialPlantValues = [{
   "plant_id": 0,
