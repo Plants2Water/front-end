@@ -66,6 +66,7 @@ const RegForm = (props) => {
   e.preventDefault();
       submit();
   };
+  
   // const onChange = (e) =>{
   //   const { name, value , checked, type} = e.target;
   //   const valueToUse = type === 'input' ? checked : value;
