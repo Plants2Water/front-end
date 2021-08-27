@@ -1,96 +1,103 @@
-import React from 'react';
-import { useHistory} from "react-router-dom";
-export default function RegForm (props) {
-  const {
-    values,
-    submit,
-    change,
-    disabled,
-    errors,
-  } = props
-  const onSubmit = e =>{
-  e.preventDefault();
-      submit();
-  };
-  const onChange = (e) =>{
-    const { name, value , checked, type} = e.target;
-    const valueToUse = type === 'input' ? checked : value;
-     change(name, valueToUse);
-  };
-  const history = useHistory();
-  const handleClick = () =>history.push('/');
+import React, { useState, useEffect } from 'react';
+import RegForm from './RegForm';
+import axios from 'axios';
+import * as yup from 'yup';
+import schema from '../../validation/formSchema';
+
+
+
+
+const initialFormValues = {
+  username: '',
+  first_name: '',
+  last_name: '',
+  password: '',
+  telephone: '',
+  email: '',
+}
+
+const initialDisabled = true
+
+export default function Register() {
+  const [user, setUser] = useState(initialFormValues);
+  const [formValues, setFormValues] = useState(initialFormValues)
+  const [formErrors, setFormErrors] = useState(initialFormValues)
+  const [disabled, setDisabled] = useState(initialDisabled)
+
+
+  const postNewUser = newUser => {
+    axios.post('https://bw-water-my-plants-01.herokuapp.com/api/auth/register', newUser)
+        .then(res =>{
+          if (res.status >=200 && res.status<300){
+            setUser(res.data);
+             window.location.href = "/register"
+            console.log("res---", res);
+          }
+        }).catch(err => console.error(err));
+        setFormValues(initialFormValues);
+  }
+
+  const validate = (name, value) => {
+    yup.reach(schema, name)
+      .validate(value)
+      .then(() => setFormErrors({ ...formErrors, [name]: '' }))
+      .catch(err => setFormErrors({...formErrors, [name]: err.errors[0]})) 
+  }
+  const inputChange = (name, value) => {
+    validate(name, value);
+    
+    
+    setFormValues({
+      ...formValues,
+      [name]: value // NOT AN ARRAY
+    });
+  }
+
+
+  const formSubmit = () => {
+    const newUser = {
+      username: formValues.username.trim(),
+      first_name: formValues.first_name.trim(),
+      last_name: formValues.last_name.trim(),
+      password: formValues.password.trim(),
+      telephone: formValues.telephone.trim(),
+      email: formValues.email.trim(),
+    }
+    postNewUser(newUser);
+  }
+  useEffect(() => {
+    postNewUser()
+  }, [])
+  useEffect(() => {
+    schema.isValid(formValues).then(valid => setDisabled(!valid))
+  }, [formValues])
+
+  
+
+  const Logout = () => {
+    setUser({ username: '', password:'' });
+    console.log("LogOut");
+  }
+
   return (
-    <div>
-      <form className='form container' onSubmit={onSubmit}>
-        <div className='top'>
-          <h2>Join Water Plants App  </h2>
-          <div className='errors'>
-          <div>{errors.username}</div>
-          <div>{errors.first_name}</div>
-          <div>{errors.last_name}</div>
-          <div>{errors.email}</div>
-          <div>{errors.telephone}</div>
-          <div>{errors.password}</div>
-        </div>
-        </div>
-        <div className='form-group inputs'>
-          <label>Username
-            <input
-              type='text'
-              name='username'
-              value={values.username}
-              onChange={onChange}
-            />
-          </label>
-          <label>First Name
-            <input
-              type='text'
-              name='first_name'
-              value={values.first_name}
-              onChange={onChange}
-            />
-          </label>
-          <label>Last Name
-            <input
-              type='text'
-              name='last_name'
-              value={values.last_name}
-              onChange={onChange}
-            />
-          </label>
-          <label>Telephone
-            <input
-              type='text'
-              name='telephone'
-              value={values.phone}
-              onChange={onChange}
-            />
-          </label>
-          <label>e-mail
-            <input
-              type='email'
-              name='email'
-              value={values.email}
-              onChange={onChange}
-            />
-          </label>
-          <label>Password
-            <input
-              type='password'
-              name='password'
-              value={values.password}
-              autoComplete='current-password'
-              onChange={onChange}
-            />
-          </label>
-        </div>
-        <button type='submit' value='login' name='login' id='login-button' onClick={onSubmit}> Register Here</button>
-      </form>
-      <div className='form container'>
-        <label> Already a Member?
-          <button onClick={handleClick}>Login</button>
-        </label>
+    <div className="Landing">
+      <div>
+        <h2>Welcome, <span>{user.username}</span></h2>
+        
+      </div>
+    
+      <RegForm 
+        values={formValues}
+        change={inputChange}
+        submit={formSubmit}
+        disabled={disabled}
+        errors={formErrors}
+      />
+      <div>
+        <button onClick={Logout}>Logout</button>
       </div>
     </div>
-  )
+  );
 }
+
+
