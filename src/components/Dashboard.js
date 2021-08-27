@@ -7,6 +7,7 @@ import AddPlant from './AddPlant'
 import Nav from './Nav'
 
 const Dashboard = (props) => {  
+    console.log('Dashboard props :>> ', props);
     const { plants } = props
 
     useEffect(() => {
