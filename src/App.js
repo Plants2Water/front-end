@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import axios from 'axios';
 import PrivateRoute from './components/PrivateRoute'
 import Dashboard from './components/Dashboard';

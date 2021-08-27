@@ -1,13 +1,13 @@
 import { React } from "react";
 import { connect } from 'react-redux'
 import { Link, Switch, Route } from 'react-router-dom'
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import { deletePlant } from "../actions/plantActions";
 import EditPlant from './EditPlant'
 
 const Plant = (props) => {
     const { plant } = props
-    const { push } = useHistory()
+    // const { push } = useHistory()
     const id = plant.id
 
     // const handleEdit = (id) => {
