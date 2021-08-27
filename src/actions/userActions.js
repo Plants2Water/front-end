@@ -9,49 +9,49 @@ export const FETCH_ERROR = "FETCH_ERROR";
 export const LOGOUT = "LOGOUT";
 export const CLEAR_ERROR = "CLEAR_ERROR";
 
-export const signup = (signupCredentials, history) => (dispatch) => {
-	dispatch({
-		type: START_FETCHING,
-	});
-    axiosWithAuth().post('/api/auth/register',signupCredentials)
-	.then(response => {
-		localStorage.setItem('token', response.data.token);
-		localStorage.setItem('userId', response.data.user.id);
-		dispatch({
-			type: gitSIGNUP,
-			payload: response.data.user
-		});
-		// history.push('/plants');
-	})
-	.catch(error => {
-		dispatch({
-			type: FETCH_ERROR,
-			payload: error,
-		});
-	});
-}
+// export const signup = (signupCredentials, history) => (dispatch) => {
+// 	dispatch({
+// 		type: START_FETCHING,
+// 	});
+//     axiosWithAuth().post('/api/auth/register',signupCredentials)
+// 	.then(response => {
+// 		localStorage.setItem('token', response.data.token);
+// 		localStorage.setItem('userId', response.data.user.id);
+// 		dispatch({
+// 			type: gitSIGNUP,
+// 			payload: response.data.user
+// 		});
+// 		// history.push('/plants');
+// 	})
+// 	.catch(error => {
+// 		dispatch({
+// 			type: FETCH_ERROR,
+// 			payload: error,
+// 		});
+// 	});
+// }
 
 //not used right now
-export const login = (loginCredentials) => (dispatch) => {
-	dispatch({
-		type: START_FETCHING,
-	});
-	axiosWithAuth().post('/api/auth/login', loginCredentials)
-	.then((response) => {
-		console.log(response);
-		localStorage.setItem('token', response.data.token);		
-		localStorage.setItem('userId', userId);
-		dispatch({
-			type: LOGIN
-		});
-	})
-	.catch((error) => {
-		dispatch({
-			type: FETCH_ERROR,
-			payload: error.response.data.message,
-		});
-	});
-}
+// export const login = (loginCredentials) => (dispatch) => {
+// 	dispatch({
+// 		type: START_FETCHING,
+// 	});
+// 	axiosWithAuth().post('/api/auth/login', loginCredentials)
+// 	.then((response) => {
+// 		console.log(response);
+// 		localStorage.setItem('token', response.data.token);		
+// 		localStorage.setItem('userId', userId);
+// 		dispatch({
+// 			type: LOGIN
+// 		});
+// 	})
+// 	.catch((error) => {
+// 		dispatch({
+// 			type: FETCH_ERROR,
+// 			payload: error.response.data.message,
+// 		});
+// 	});
+// }
 
 export const getUser = (id) => (dispatch) => {
     dispatch({

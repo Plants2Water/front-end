@@ -1,8 +1,8 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Label } from 'reactstrap'
 import Nav from './Nav'
-import { createPlant } from '../actions/plantActions'
+import { addPlant } from '../actions/plantActions'
 
 const initialPlantValues = [{
     "plant_id": 0,
@@ -21,20 +21,20 @@ const AddPlant = (props) => {
     const [plant, setPlant] = useState(initialPlantValues)
 
     const handleChange = event => {
-        setPlant(...plant,
-            [event.target.name] = event.target.value)
+        setPlant({...plant,
+            [event.target.name]: event.target.value})
     }
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        props.createPlant(plant)
+        props.addPlant(plant)
         props.history.push('/dashboard')
     }
 
     return (
-        <div className = 'addPlantForm' id = 'addPlantForm'>
+        <div className = 'plantForm' id = 'addPlantForm'>
             <Nav />
-            <form>
+            <form onSubmit={handleSubmit}>
                 <h1>About Your Plant</h1>
                 <h2>
 
@@ -84,7 +84,7 @@ const AddPlant = (props) => {
                     onChange = {handleChange}
                 />
             </Label>
-            <button onSubmit={handleSubmit}>Add Plant</button>
+            <button>Add Plant</button>
                 </h2>
             </form>
         </div>
@@ -92,4 +92,11 @@ const AddPlant = (props) => {
     )
 }
 
-export default connect(null,{createPlant})(AddPlant)
+const mapStateToProps = (state) => {
+    return {
+      plants: state.plants,
+      user_id: state.user_id
+    }
+  }
+
+export default connect(mapStateToProps,{addPlant})(AddPlant)

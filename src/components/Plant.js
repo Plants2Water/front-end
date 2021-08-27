@@ -1,17 +1,22 @@
-import { React, useEffect } from "react";
+import { React } from "react";
 import { connect } from 'react-redux'
 import { Link, Switch, Route } from 'react-router-dom'
-import { fetchPlant } from "../actions/plantActions";
+import { useHistory } from "react-router-dom";
+import { deletePlant } from "../actions/plantActions";
 import EditPlant from './EditPlant'
 
 const Plant = (props) => {
-    const { plant, fetching, error } = props
+    const { plant } = props
+    const { push } = useHistory()
     const id = plant.id
 
-    useEffect(() => {
-        fetchPlant(id)
-    },[])
-
+    // const handleEdit = (id) => {
+    //     push(`/editplant/${id}`)
+    // }
+    
+    const handleDelete = (id) => {
+        props.deletePlant(id)
+    }
 
     return (
         <div>
@@ -24,10 +29,13 @@ const Plant = (props) => {
                 <li>Notes: {plant.notes}</li>
             </ul>
 
+            <button onClick={() => {handleDelete(id)}}>Delete</button>
             <Link to='/editplant'>Edit Plant</Link>
 
             <Switch>
-                <Route path='/editplant' component={EditPlant} />
+                <Route path='/editplant'>
+                    <EditPlant user_id={props.user_id} plant={plant}/>
+                </Route>
             </Switch>
         </div>
     )
@@ -35,10 +43,9 @@ const Plant = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        plant: state.plant,
-        fetching: state.fetching,
-        error: state.error
+        plants: state.plants,
+        user_id: state.user_id
     }
 }
 
-export default connect(mapStateToProps,{fetchPlant})(Plant)
+export default connect(mapStateToProps,{deletePlant})(Plant)

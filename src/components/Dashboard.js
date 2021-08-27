@@ -1,23 +1,23 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { getPlants } from '../actions/plantActions'
+import { fetchPlants } from '../actions/plantActions'
 import { Link, Switch, Route } from 'react-router-dom'
 import Plant from './Plant'
 import AddPlant from './AddPlant'
 import Nav from './Nav'
 
 const Dashboard = (props) => {  
-    const { plants, fetching, error } = props
+    const { plants } = props
 
     useEffect(() => {
-        props.getPlants()
+        props.fetchPlants(props.user_id)
     },[])
 
     return(
         <div>
             <Nav />
-            {props.plants.map(plant => 
-                <Plant plant={plant} />)}
+            {plants.map(plant => 
+                <Plant key ={plant.plant_id} plant={plant} user_id={props.user_id} />)}
             <Link to='/addplant'>Add new plant</Link>
 
             <Switch>
@@ -30,9 +30,8 @@ const Dashboard = (props) => {
 const mapStateToProps = (state) => {
     return {
         plants: state.plants,
-        fetching: state.fetching,
-        error: state.error
+        user_id: state.user_id
     }
 }
 
-export default connect(mapStateToProps, {getPlants})(Dashboard)
+export default connect(mapStateToProps, {fetchPlants})(Dashboard)
