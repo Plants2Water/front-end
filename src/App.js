@@ -3,8 +3,11 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import axios from 'axios';
 import PrivateRoute from './components/PrivateRoute'
 import Dashboard from './components/Dashboard';
-import './App.css';
+import AddPlant from './components/AddPlant';
+import EditPlant from './components/EditPlant';
 import RegForm from './components/RegForm';
+import Landing from './components/Landing'
+import './App.css';
 
 // const initialUserValues = [{
 //   "user_id": 2, 
@@ -17,6 +20,7 @@ import RegForm from './components/RegForm';
 //   "created_at": "2021-08-23T14:42:11.045Z", 
 //   "updated_at": "2021-08-23T14:42:11.045Z"
 // }]
+<<<<<<< HEAD
 
 const initialCreds = {
   username:'',
@@ -49,6 +53,10 @@ function App() {
     .catch(err => console.log(err))
   } 
 
+=======
+
+function App() {
+>>>>>>> main
   const register = (userData) => {
     axios
       .post('https://bw-water-my-plants-01.herokuapp.com/api/auth/register', userData)
@@ -62,18 +70,16 @@ function App() {
   return (
     <Router>
     <div className="App">
-        
-        <h1>Plants!</h1>
+        {/* {localStorage.getItem('token') && <div>
+          <Link to='/dashboard'>Dashboard</Link></div>} */}
+        {/* <PrivateRoute path='/dashboard' component={Dashboard} /> */}
+        <PrivateRoute path='/addplant' component={AddPlant} />
+        <PrivateRoute path='/editplant' component={EditPlant} />
+        <PrivateRoute path='/dashboard' component={Dashboard} />
         <Route path='/register'>
           <RegForm register={register} />
         </Route>
-        
-        {localStorage.getItem('token') && <div>
-          <Link to='/dashboard'>Dashboard</Link></div>}
-
-          <PrivateRoute path='/dashboard' component={Dashboard} />
-           {/* <Route exact path='/' component={Landing}/> */}
-           
+        <Route exact path='/' component={Landing} />
     </div>
     </Router>
   );
