@@ -66,6 +66,7 @@ const RegForm = (props) => {
   e.preventDefault();
       submit();
   };
+  
   // const onChange = (e) =>{
   //   const { name, value , checked, type} = e.target;
   //   const valueToUse = type === 'input' ? checked : value;
@@ -79,9 +80,9 @@ const RegForm = (props) => {
     const creds = {
       username: values.username.trim(),
       password: values.password.trim(),
-      last_name: values.username.trim(),
-      first_name: values.password.trim(),
-      telephone: values.email.trim(),
+      last_name: values.last_name.trim(),
+      first_name: values.first_name.trim(),
+      telephone: values.telephone.trim(),
       email: values.email.trim(),
     };
     await props.registerUser(creds);

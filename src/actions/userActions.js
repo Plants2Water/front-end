@@ -117,6 +117,7 @@ export const updateUser = (user) => (dispatch) => {
 }
 
 export const registerUser = (regCreds) => (dispatch) => {
+console.log('hit registerUser regCreds :>> ', regCreds);
     dispatch({ type: REGISTER_LOADING });
     axios
       .post('https://bw-water-my-plants-01.herokuapp.com/api/auth/register', regCreds)

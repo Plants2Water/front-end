@@ -19,6 +19,7 @@ const initialPlantValues = [{
   }]
 
 const EditPlant = (props) => {
+    console.log('EditPlant props :>> ', props);
 	const { plant } = props
 	// const [editingPlant, setEditingPlant] = useState(props.plant)
 
