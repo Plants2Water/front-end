@@ -1,25 +1,99 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory} from "react-router-dom";
+// import { registerUser } from '../actions/userAction';
+import { connect } from 'react-redux';
+import schema from '../validation/formSchema';
+import * as yup from 'yup';
+import { registerUser } from '../actions/userActions';
 
-export default function RegForm (props) {
+const RegForm = (props) => {
+  console.log('RegForm props :>> ', props);
   const {
-    values,
-    submit,
-    change,
-    disabled,
-    errors,
+    // values,
+    // submit,
+    // change,
+    // disabled,
+    // errors,
   } = props
+
+  const initialValues = {
+    "username": "", 
+    "password": "", 
+    "last_name": "", 
+    "first_name": "", 
+    "telephone": "", 
+    "email": ""
+  }
+  
+  const initialErrors = {
+    "username": "", 
+    "password": "", 
+    "last_name": "", 
+    "first_name": "", 
+    "telephone": "", 
+    "email": ""
+  }
+
+  const [values, setValues] = useState(initialValues);
+  const [errors, setErrors] = useState(initialErrors);
+  const { push } = useHistory();
+
+
+  const onChange = (e) => {
+    setValues({
+      ...values,
+      [e.target.name]: e.target.value,
+    });
+    const { name, value } = e.target;
+    yup
+      .reach(schema, name)
+      .validate(value)
+      .then(() => {
+        setErrors({
+          ...errors,
+          [name]: '',
+        });
+      })
+      .catch((err) => {
+        setErrors({
+          ...errors,
+          [name]: err.errors[0],
+        });
+      });
+  };
+  
   const onSubmit = e =>{
   e.preventDefault();
       submit();
   };
-  const onChange = (e) =>{
-    const { name, value , checked, type} = e.target;
-    const valueToUse = type === 'input' ? checked : value;
-     change(name, valueToUse);
-  };
+  // const onChange = (e) =>{
+  //   const { name, value , checked, type} = e.target;
+  //   const valueToUse = type === 'input' ? checked : value;
+  //    change(name, valueToUse);
+  // };
   const history = useHistory();
   const handleClick = () =>history.push('/');
+
+  const submit = async () => {
+    // e.preventDefault();
+    const creds = {
+      username: values.username.trim(),
+      password: values.password.trim(),
+      last_name: values.username.trim(),
+      first_name: values.password.trim(),
+      telephone: values.email.trim(),
+      email: values.email.trim(),
+    };
+    await props.registerUser(creds);
+    push('/login');
+  };
+  useEffect(() => {
+    schema.isValid(values).then((valid) => {
+      // setDisabled(!valid);
+    });
+  }, [values]);
+
+
   return (
     <div>
       <form className='form container' onSubmit={onSubmit}>
@@ -95,3 +169,5 @@ export default function RegForm (props) {
     </div>
   )
 }
+
+export default connect(null, { registerUser })(RegForm);
