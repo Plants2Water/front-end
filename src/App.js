@@ -6,7 +6,8 @@ import Dashboard from './components/Dashboard';
 import AddPlant from './components/AddPlant';
 import EditPlant from './components/EditPlant';
 import RegForm from './components/RegForm';
-import Landing from './components/Landing'
+import Landing from './components/Landing';
+import styled from 'styled-components';
 import './App.css';
 
 // const initialUserValues = [{
