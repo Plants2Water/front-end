@@ -1,4 +1,4 @@
-import { ADD_PLANT, EDIT_PLANT, DELETE_PLANT, FETCH_START, FETCH_FAIL, FETCH_SUCCESS, SET_ERROR } from "../actions/plantActions"
+import { ADD_PLANT, EDIT_PLANT, DELETE_PLANT, FETCH_START, FETCH_FAIL, FETCH_SUCCESS, SET_USERID, SET_ERROR } from "../actions/plantActions"
 import axiosWithAuth from "../helpers/axiosWithAuth"
 
 const initialState = {
@@ -61,7 +61,11 @@ const plantReducer = (state = initialState, action) => {
             return({
                 ...state,plants:state.plants.filter(plant => plant.plant_id !== action.payload)
             })
-        case(SET_ERROR):
+        case(SET_USERID):
+        return({
+            ...state,user_id:action.payload
+        })
+            case(SET_ERROR):
             return({
                 ...state, error: action.payload
             })    
