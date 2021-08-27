@@ -21,6 +21,9 @@ import './App.css';
 //   "created_at": "2021-08-23T14:42:11.045Z", 
 //   "updated_at": "2021-08-23T14:42:11.045Z"
 // }]
+const App = styled.div `
+
+`
 
 function App() {
   const register = (userData) => {
@@ -35,7 +38,7 @@ function App() {
 
   return (
     <Router>
-    <div className="App">
+    <App>
         {/* {localStorage.getItem('token') && <div>
           <Link to='/dashboard'>Dashboard</Link></div>} */}
         {/* <PrivateRoute path='/dashboard' component={Dashboard} /> */}
@@ -43,10 +46,10 @@ function App() {
         <PrivateRoute path='/editplant' component={EditPlant} />
         <PrivateRoute path='/dashboard' component={Dashboard} />
         <Route path='/register'>
-          <RegForm register={register} />
+          <RegForm register={register} styled = '' />
         </Route>
         <Route exact path='/' component={Landing} />
-    </div>
+    </App>
     </Router>
   );
 }
