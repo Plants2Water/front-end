@@ -86,7 +86,7 @@ const RegForm = (props) => {
       email: values.email.trim(),
     };
     await props.registerUser(creds);
-    push('/login');
+    push('/');
   };
   useEffect(() => {
     schema.isValid(values).then((valid) => {

@@ -47,7 +47,7 @@ const Landing = (props) => {
     localStorage.removeItem('token')
     return <Redirect to ='/' />
   }
-  
+  // console.log('Landing props :>> ', props);
   return (
     <div className="Landing">
         <div>
