@@ -1,79 +1,70 @@
 import React, { useState, useEffect } from 'react';
 import LoginForm from './LoginForm';
+import { Redirect } from 'react-router-dom';
+import { setUserID } from './../actions/plantActions'
+import { connect } from 'react-redux';
 import axios from 'axios';
-import * as yup from 'yup';
-import schema from "../validation/formSchema";
 
-const initialFormValues = {
-  username: '',
-  password: '',
-}
-const initialDisabled = true
-export default function Landing() {
-  const [login, setLogin] = useState(initialFormValues);
-  const [formValues, setFormValues] = useState(initialFormValues)
-  const [formErrors, setFormErrors] = useState(initialFormValues)
-  const [disabled, setDisabled] = useState(initialDisabled)
+const Landing = (props) => {
+  const login = (credentials) => {
+    axios.post('https://bw-water-my-plants-01.herokuapp.com/api/auth/login',credentials)
+    .then(res => {
+      if (res.status >=200 && res.status<300){
+      localStorage.setItem('token', res.data.token)
+      props.setUserID(res.data.user_id)
+      window.location.href = '/dashboard'
+      } else {
+      localStorage.removeItem('token')
+      }
+    })
+    .catch(err => console.log(err))
+  } 
+  // const [login, setLogin] = useState(initialFormValues)
+  
 
-  const postLogin = newLogin => {
-    axios.post('https://bw-water-my-plants-01.herokuapp.com/api/auth/login', newLogin)
-        .then(res =>{
-          if (res.status >=200 && res.status<300){
-          setLogin(res.data);
-          console.log("res---", res);
-          }
-        }).catch(err => console.error(err));
-        setFormValues(initialFormValues);
-  }
-  const validate = (name, value) => {
-    yup.reach(schema, name)
-      .validate(value)
-      .then(() => setFormErrors({ ...formErrors, [name]: '' }))
-      .catch(err => setFormErrors({...formErrors, [name]: err.errors[0]}))
-  }
-  const inputChange = (name, value) => {
-    validate(name, value);
-    setFormValues({
-      ...formValues,
-      [name]: value
-    });
-  }
-  const formSubmit = () => {
-    const newLogin = {
-      username: formValues.username.trim(),
-      password: formValues.password.trim(),
-    }
-    postLogin(newLogin);
-  }
+  // const postLogin = newLogin => {
+  //   axios.post('https://bw-water-my-plants-01.herokuapp.com/api/auth/login', newLogin)
+  //       .then(res =>{
+  //         if (res.status >=200 && res.status<300){
+  //         setLogin(res.data);
+  //         console.log("res---", res);
+  //         }
+  //       }).catch(err => console.error(err));
+  //       setFormValues(initialFormValues);
+  // }
+  
+  
+  
 
-  useEffect(() => {
-    postLogin()
-  }, [])
+  // useEffect(() => {
+  //   postLogin()
+  // }, [])
 
-  useEffect(() => {
-    schema.isValid(formValues).then(valid => setDisabled(!valid))
-  }, [formValues])
+  
 
-  const Logout = () => {
-    setLogin(initialFormValues);
-    console.log("LogOut");
+  const logout = () => {
+    // setLogin(initialFormValues)
+    localStorage.removeItem('token')
+    return <Redirect to ='/' />
   }
   
   return (
     <div className="Landing">
         <div>
-          <h2>Welcome, <span>{login.username}</span></h2>
+           <h1>Plants!</h1>  
         </div>
-        <LoginForm
-          values={formValues}
-          change={inputChange}
-          submit={formSubmit}
-          disabled={disabled}
-          errors={formErrors}
-        />
+        <LoginForm login={login} />
         <div>
-        <button onClick={Logout}>Logout</button>
+        <button onClick={logout}>Logout</button>
       </div>
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user_id: state.user_id
+  }
+}
+
+export default connect(mapStateToProps,{setUserID})(Landing)
