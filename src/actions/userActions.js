@@ -58,26 +58,26 @@ export const REGISTER_FAILURE = 'REGISTER_FAILURE';
 // 	});
 // }
 
-export const getUser = (id) => (dispatch) => {
-    dispatch({
-        type: START_FETCHING,
-    })
-axiosWithAuth()
-.get('https://place url here/${id}')
-.then((res) => {
-    dispatch({
-        type: FETCHING_USER_SUCCESS,
-        payload: res.data
-    })
-})
-.catch((error) => {
-    console.log(error)
-    dispatch({
-        type: FETCH_ERROR,
-        payload: error.message
-    })
-})
-}
+// export const getUser = (id) => (dispatch) => {
+//     dispatch({
+//         type: START_FETCHING,
+//     })
+// axiosWithAuth()
+// .get('https://place url here/${id}')
+// .then((res) => {
+//     dispatch({
+//         type: FETCHING_USER_SUCCESS,
+//         payload: res.data
+//     })
+// })
+// .catch((error) => {
+//     console.log(error)
+//     dispatch({
+//         type: FETCH_ERROR,
+//         payload: error.message
+//     })
+// })
+// }
 
 export const logout = () => (dispatch) => {
 	localStorage.clear();
@@ -93,7 +93,7 @@ export const clearError = () => (dispatch) => {
 }
 
 export const updateUser = (user) => (dispatch) => {
-    const id = localStorage.getItem('userId')
+    // const id = localStorage.getItem('userId')
     dispatch({
         type: START_FETCHING, 
     })

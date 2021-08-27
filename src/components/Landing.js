@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import LoginForm from './LoginForm';
 import { Redirect } from 'react-router-dom';
 import { setUserID } from './../actions/plantActions'
@@ -44,6 +44,7 @@ const Landing = (props) => {
 
   const logout = () => {
     // setLogin(initialFormValues)
+    console.log('logout') //never seems to reach this
     localStorage.removeItem('token')
     return <Redirect to ='/' />
   }

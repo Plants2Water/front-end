@@ -45,8 +45,14 @@ const LoginForm = (props) => {
   }
 
   const onSubmit = e =>{
-  e.preventDefault();
-  formSubmit();
+    e.preventDefault();
+    if(disabled){
+      console.log('disabled')
+    } else
+    {
+      console.log('not disabled')
+    }
+    formSubmit();
   };
 
   const onChange = (e) =>{

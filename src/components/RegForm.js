@@ -8,13 +8,13 @@ import { registerUser } from '../actions/userActions';
 
 const RegForm = (props) => {
   console.log('RegForm props :>> ', props);
-  const {
+  // const {
     // values,
     // submit,
     // change,
     // disabled,
     // errors,
-  } = props
+  // } = props
 
   const initialValues = {
     "username": "", 
