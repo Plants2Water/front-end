@@ -1,46 +1,70 @@
-import { FETCH_START_PLANTS, GET_PLANTS_SUCCESS, FETCH_PLANT_SUCCESS, FETCH_FAIL_PLANTS, CREATE_PLANT_SUCCESS, UPDATE_PLANT_SUCCESS, DELETE_PLANT_SUCCESS } from "../actions/plantActions"
+import { ADD_PLANT, EDIT_PLANT, DELETE_PLANT, FETCH_START, FETCH_FAIL, FETCH_SUCCESS, SET_ERROR } from "../actions/plantActions"
+import axiosWithAuth from "../helpers/axiosWithAuth"
 
 const initialState = {
-    plants:[],
-    plant:{
-        id: "",
-        nickname: "",
-        species: "",
-    },
+    plants:[{}],
+    plant:{},
     fetching:false, 
-    error:''
+    error:'',
+    user_id:0
 }
 
 const plantReducer = (state = initialState, action) => {
     switch (action.type) {
-        case(FETCH_START_PLANTS):
+        case(FETCH_START):
             return({
-                ...state,fetching:true,error:''
+                ...state,fetching:true
             })
-        case(FETCH_FAIL_PLANTS):
+        case(FETCH_FAIL):
             return({
                 ...state,fetching:false,error:action.payload
             })
-        case(GET_PLANTS_SUCCESS):
+        case(FETCH_SUCCESS):
             return({
-                ...state,plants:action.payload,error:''
+                ...state,plants:action.payload,fetching:false
             })
-        case(FETCH_PLANT_SUCCESS):
+        case(ADD_PLANT):
+        	axiosWithAuth()
+            .post("/plants", action.payload)
+            .then(res => {
+                console.log(res)
+                axiosWithAuth()
+                    .get(`/users/${state.user_id}/plants`)
+                    .then(res => {
+                        console.log('updated plant database')
+                        return({...state,
+                        fetching:false,
+                        plants: res.data
+                        })
+                    })
+                    .catch(err => console.log(err))
+            })
+            .catch(error => console.log(error));
+
             return({
-                ...state,plant:action.payload,error:''
+                ...state,plants:[...state.plants, action.payload]
             })
-        case(CREATE_PLANT_SUCCESS):
+        case(EDIT_PLANT):
+            axiosWithAuth()
+            .put(`/plants/${action.plant_id}`, action.payload)
+            .then(res => console.log(res))
+            .catch(error => console.log(error));
+
             return({
-                ...state,plant:action.payload,error:''
+                ...state,plants:state.plants.filter(plant => plant.plant_id !== action.payload.plant_id)
             })
-        case(UPDATE_PLANT_SUCCESS):
+        case(DELETE_PLANT):
+            axiosWithAuth().delete(`plants/${action.payload}`)
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
+    
             return({
-                ...state,plant:action.payload,error:''
+                ...state,plants:state.plants.filter(plant => plant.plant_id !== action.payload)
             })
-        case(DELETE_PLANT_SUCCESS):
+        case(SET_ERROR):
             return({
-                ...state,plant:action.payload,error:''
-            })
+                ...state, error: action.payload
+            })    
         default:
             return state
     }

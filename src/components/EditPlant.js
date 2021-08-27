@@ -2,35 +2,44 @@ import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
 import {link, useHistory, useParams} from 'react-router-dom'
 import { getUser } from './../actions/userActions'
-import { updatePlant, deletePlant } from './../actions/plantActions'
+import { editPlant } from './../actions/plantActions'
 import Nav from './Nav'
 
+const initialPlantValues = [{
+    "plant_id": 0,
+    "species": "",
+    "nickname": "",
+    "h2oFrequency": 0,
+    "last_watered": "",
+    "photo_url": "",
+    "notes": "",
+    "user_id": 0,
+    "created_at": "",
+    "updated_at": ""
+  }]
+
 const EditPlant = (props) => {
-	const { plant, fetching, error } = props
+	const { plant } = props
+	// const [editingPlant, setEditingPlant] = useState(props.plant)
+
 	const history = useHistory();
-	const { isLoading, user, getUser, updatePlant } = props
-	const { id } = useParams();
-	const classes = useStyles();
+	const { isLoading, user, getUser, updatePlant, deletePlant } = props
+	const { id } = props
+	// const classes = useStyles();
 
-	const [formErrors, setFormErrors] = useState(initialFormErrors)
-	const [submitDisabled, setSubmitDisabled] = useState(true)
+	// const [formErrors, setFormErrors] = useState(initialFormErrors)
+	// const [submitDisabled, setSubmitDisabled] = useState(true)
 
-	useEffect(() => {
-		if (!user) {
-			getUser(localStorage.getItem("userId"))
-		} else {
-			const plantToEdit = user.plants.find(
-				(plant) => String(plant.id) === String(id),
-			);
-			setPlant(plantToEdit)
-		}
-	}, [user, getUser, setPlant, id])
 
-    useEffect(() => {
-		schema.isValid(plant).then((valid) => {
-			setSubmitDisabled(!valid);
-		});
-	}, [plant])
+    // useEffect(() => {
+	// 	schema.isValid(plant).then((valid) => {
+	// 		setSubmitDisabled(!valid);
+	// 	});
+	// }, [plant])
+
+	const handleChange = (e) => {
+		// setPlant({...plant,[e.target.name]: e.target.value})
+	}
 
     const handleSubmit = (event) => {
 		event.preventDefault();
@@ -45,17 +54,17 @@ const EditPlant = (props) => {
 	}
 
     return (
-        <div className = 'editPlantForm' id = 'editPlantFrom'>
+        <div className = 'plantForm' id = 'editPlantFrom'>
 			<Nav />
             <h1>Edit Your Plant</h1>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <label >
                     Plant Name:
                     <input
-                        name = 'plantName'
-                        id = 'plantName'
+                        name = 'nickname'
+                        value = {plant.nickname}
                         type = 'text'
-                        placeholder = 'Please name this plant'
+                        placeholder = 'Plant nickname'
                         onChange = {handleChange}
                     />
                 </label>
@@ -76,8 +85,8 @@ const EditPlant = (props) => {
             <label>
                 Water Frequency:
                 <input
-                    name = 'h20Frequency'
-                    id = 'h20Frequency'
+                    name = 'h2oFrequency'
+                    id = 'h2oFrequency'
                     type = 'text'
                     placeholder = 'How often to water'
                     onChange = {handleChange}
@@ -85,7 +94,7 @@ const EditPlant = (props) => {
             </label>
 
             {/* Optional Image */}
-            <Label>
+            <label>
                 <input 
                     name = 'plantImage'
                     id = 'plantImage'
@@ -93,20 +102,17 @@ const EditPlant = (props) => {
                     placeholder = 'Optional: URL to plant image'
                     onChange = {handleChange}
                 />
-            </Label>
-            <button onSubmit={handleSubmit}>Submit Changes</button>
+            </label>
+            <button>Submit Changes</button>
             </form>
-
-			<button onClick={handleDelete}>Delete plant</button>
         </div>
     )
 }
 const mapStateToProps = (state) => {
 	return {
-		plant: state.plant,
-		fetching: state.fetching,
-		error: state.error
+		plants: state.plants,
+		user_id: state.user_id
 	}
 }
 
-export default connect (mapStateToProps,{updatePlant, getUser, deletePlant})(EditPlant)
+export default connect (mapStateToProps,{editPlant})(EditPlant)

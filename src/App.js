@@ -4,7 +4,7 @@ import axios from 'axios';
 import PrivateRoute from './components/PrivateRoute'
 import Dashboard from './components/Dashboard';
 import './App.css';
-import Register from './components/Register';
+import RegForm from './components/RegForm';
 
 const initialUserValues = [{
   "user_id": 2, 
@@ -37,33 +37,44 @@ function App() {
   //   .catch(err => console.log(err))
   // },[])
 
-  // const login = (e) => {
-  //   e.preventDefault()
-  //   if (credentials.username==='Lambda' && credentials.password==='School') {
-  //   axios.post('https://bw-water-my-plants-01.herokuapp.com/api/auth/login',credentials)
-  //   .then(res => {
-  //     localStorage.setItem('token', res.data.payload)
-  //     console.log(res.message)
-  //   })
-  //   .catch(err => console.log(err))
-  //   } 
-  // }
+  const login = (credentials) => {
+    axios.post('https://bw-water-my-plants-01.herokuapp.com/api/auth/login',credentials)
+    .then(res => {
+      if (res.status >=200 && res.status<300){
+      localStorage.setItem('token', res.data.token)
+      window.location.href = '/dashboard'
+      } else {
+      localStorage.removeItem('token')
+      }
+    })
+    .catch(err => console.log(err))
+  } 
+
+  const register = (userData) => {
+    axios
+      .post('https://bw-water-my-plants-01.herokuapp.com/api/auth/register', userData)
+      .then(res => console.log(res))
+      .catch(err => {
+        localStorage.removeItem("token")
+        console.log(err)
+      })
+  }
 
   return (
     <Router>
     <div className="App">
         
         <h1>Plants!</h1>
-
-        <Link to='/login'>Log In</Link>
+        <Route path='/register'>
+          <RegForm register={register} />
+        </Route>
+        
         {localStorage.getItem('token') && <div>
           <Link to='/dashboard'>Dashboard</Link></div>}
 
-        <Switch>
           <PrivateRoute path='/dashboard' component={Dashboard} />
            {/* <Route exact path='/' component={Landing}/> */}
-           <Route exact path='/register' component={Register}/>
-        </Switch>
+           
     </div>
     </Router>
   );
