@@ -1,4 +1,5 @@
 import axiosWithAuth from '../helpers/axiosWithAuth'
+import axios from 'axios';
 
 export const START_FETCHING = 'START_FETCHING'
 export const FETCHING_USER_SUCCESS = "FETCHING_USER_SUCCESS"
@@ -8,6 +9,10 @@ export const LOGIN = "LOGIN";
 export const FETCH_ERROR = "FETCH_ERROR";
 export const LOGOUT = "LOGOUT";
 export const CLEAR_ERROR = "CLEAR_ERROR";
+
+export const REGISTER_LOADING = 'REGISTER_LOADING';
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+export const REGISTER_FAILURE = 'REGISTER_FAILURE';
 
 // export const signup = (signupCredentials, history) => (dispatch) => {
 // 	dispatch({
@@ -110,3 +115,14 @@ export const updateUser = (user) => (dispatch) => {
         })
     })
 }
+
+export const registerUser = (regCreds) => (dispatch) => {
+    dispatch({ type: REGISTER_LOADING });
+    axios
+      .post('https://bw-water-my-plants-01.herokuapp.com/api/auth/register', regCreds)
+      .then((res) => dispatch({ type: REGISTER_SUCCESS, payload: res.data }))
+      .catch((err) => {
+        dispatch({ type: REGISTER_FAILURE, payload: err.response.data.message });
+      });
+  };
+  

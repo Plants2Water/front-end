@@ -6,8 +6,7 @@ import Dashboard from './components/Dashboard';
 import AddPlant from './components/AddPlant';
 import EditPlant from './components/EditPlant';
 import RegForm from './components/RegForm';
-import Landing from './components/Landing';
-import styled from 'styled-components';
+import Landing from './components/Landing'
 import './App.css';
 
 // const initialUserValues = [{
@@ -21,11 +20,43 @@ import './App.css';
 //   "created_at": "2021-08-23T14:42:11.045Z", 
 //   "updated_at": "2021-08-23T14:42:11.045Z"
 // }]
-const App = styled.div `
+<<<<<<< HEAD
 
-`
+const initialCreds = {
+  username:'',
+  password:''
+}
 
 function App() {
+  // const [plants, setPlants] = useState(initialPlantValues)
+  // const [users, setUsers] = useState(initialUserValues)
+  // const [credentials, setCredentials] = useState(initialCreds)
+
+  // useEffect(() => {
+  //   axios.get('https://bw-water-my-plants-01.herokuapp.com/api/users')
+  //   .then(res => {
+  //     console.log(res.data)
+  //     setUsers(res.data)
+  //   })
+  //   .catch(err => console.log(err))
+  // },[])
+  const login = (credentials) => {
+    axios.post('https://bw-water-my-plants-01.herokuapp.com/api/auth/login',credentials)
+    .then(res => {
+      if (res.status >=200 && res.status<300){
+      localStorage.setItem('token', res.data.token)
+      window.location.href = '/dashboard'
+      } else {
+      localStorage.removeItem('token')
+      }
+    })
+    .catch(err => console.log(err))
+  } 
+
+=======
+
+function App() {
+>>>>>>> main
   const register = (userData) => {
     axios
       .post('https://bw-water-my-plants-01.herokuapp.com/api/auth/register', userData)
@@ -38,7 +69,7 @@ function App() {
 
   return (
     <Router>
-    <App>
+    <div className="App">
         {/* {localStorage.getItem('token') && <div>
           <Link to='/dashboard'>Dashboard</Link></div>} */}
         {/* <PrivateRoute path='/dashboard' component={Dashboard} /> */}
@@ -46,10 +77,10 @@ function App() {
         <PrivateRoute path='/editplant' component={EditPlant} />
         <PrivateRoute path='/dashboard' component={Dashboard} />
         <Route path='/register'>
-          <RegForm register={register} styled = '' />
+          <RegForm register={register} />
         </Route>
         <Route exact path='/' component={Landing} />
-    </App>
+    </div>
     </Router>
   );
 }
